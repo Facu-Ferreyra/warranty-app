@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { productSchema, type ProductFormData } from '../schema'
+import { productSchema, type productFormDataT } from '../schema'
 import { useProductStore } from '../store'
 
 export function ProductForm() {
   const addProduct = useProductStore((state) => state.addProduct)
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<ProductFormData>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<productFormDataT>({
     resolver: zodResolver(productSchema),
   })
 
-  const onSubmit = (data: ProductFormData) => {
+  const onSubmit = (data: productFormDataT) => {
     addProduct(data)
     reset()
   }

@@ -14,4 +14,4 @@ export const productSchema = z.object({
   importance: z.enum( ["High", "Medium", "Low"] )
 })
 
-export type ProductFormData = z.infer<typeof productSchema>
+export type productFormDataT = z.infer<typeof productSchema>
