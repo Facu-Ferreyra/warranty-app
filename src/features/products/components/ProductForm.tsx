@@ -4,7 +4,7 @@ import { productSchema, type ProductFormData } from '../schema'
 import { useProductStore } from '../store'
 
 export function ProductForm() {
-  const addProduct = useProductStore((s) => s.addProduct)
+  const addProduct = useProductStore((state) => state.addProduct)
   const { register, handleSubmit, reset, formState: { errors } } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
   })
@@ -40,6 +40,18 @@ export function ProductForm() {
       </div>
 
       <div>
+        <label htmlFor="price" className="text-sm font-medium">Precio</label>
+        <input
+            id="price"
+            type="number"
+            {...register('price', { valueAsNumber: true })}
+            className="mt-1 w-full border rounded px-3 py-2 text-sm"
+            placeholder="1200"
+        />
+        {errors.price && <p className="text-red-600 text-xs mt-1">{errors.price.message}</p>}
+      </div>
+
+      <div>
         <label htmlFor="purchaseDate" className="text-sm font-medium">Fecha de compra</label>
         <input
           id="purchaseDate"
@@ -61,6 +73,24 @@ export function ProductForm() {
         />
         {errors.durationMonths && <p className="text-red-600 text-xs mt-1">{errors.durationMonths.message}</p>}
       </div>
+
+
+
+      <div>
+        <label htmlFor="importance" className="text-sm font-medium">Importancia</label>
+        <select
+            id="importance"
+            {...register('importance')}
+            className="mt-1 w-full border rounded px-3 py-2 text-sm"
+        >
+            <option value="">Elegir importancia...</option>
+            <option value="High">Alta</option>
+            <option value="Medium">Media</option>
+            <option value="Low">Baja</option>
+        </select>
+        {errors.importance && <p className="text-red-600 text-xs mt-1">{errors.importance.message}</p>}
+      </div>
+
 
       <button type="submit" className="bg-blue-600 text-white rounded px-4 py-2 text-sm hover:bg-blue-700">
         Agregar producto

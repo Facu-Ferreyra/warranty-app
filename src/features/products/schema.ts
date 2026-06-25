@@ -5,6 +5,13 @@ export const productSchema = z.object({
   category: z.string().min(1, 'La categoría es obligatoria'),
   purchaseDate: z.string().min(1, 'La fecha de compra es obligatoria'),
   durationMonths: z.number().min(1, 'La duración debe ser al menos 1 mes'),
+  price: z.union(
+    [
+        z.string().min(1, "El precio es obligatorio"),
+        z.number()
+    ]
+  ),
+  importance: z.enum( ["High", "Medium", "Low"] )
 })
 
 export type ProductFormData = z.infer<typeof productSchema>
