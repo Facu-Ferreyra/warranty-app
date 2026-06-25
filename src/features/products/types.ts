@@ -8,6 +8,12 @@ export type productT = {
 }
 
 
+export type productsInStateT = {
+
+    products : productT[];
+
+}
+
 
 
 

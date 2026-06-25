@@ -1,6 +1,6 @@
-import { create } from 'zustand'
+﻿import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { productT } from './types'
+import type { productsInStateT, productT } from './types'
 
 type productStoreT = {
   products: productT[];
@@ -9,25 +9,68 @@ type productStoreT = {
   deleteProduct: (id: string) => void;
 };
 
-export const useProductStore = create< productStoreT >()(
-  persist(
-    (set) => ({
-      products: [],
-      addProduct: (data) =>
-        set((state) => ({
-          products: [...state.products, { ...data, id: crypto.randomUUID() }],
-        })),
-      updateProduct: (id, data) =>
-        set((state) => ({
-          products: state.products.map((product) =>
-            product.id === id ? { ...product, ...data } : product
-          ),
-        })),
-      deleteProduct: (id) =>
-        set((state) => ({
-          products: state.products.filter((p) => p.id !== id),
-        })),
-    }),
-    { name: 'warranty-storage' }
-  )
+
+export const useProductStore = create<productStoreT> ()(
+
+    persist(
+
+        (set)  => {
+
+            return {
+
+                products: [] ,
+            
+                addProduct: ( data ) => {
+
+                    set( (state : productStoreT ) : productsInStateT => {
+
+                        return {
+
+                            products: [
+                                ...state.products,
+                                {
+                                    ...data,
+                                    id: crypto.randomUUID()
+                                }
+                            ]
+
+                        }
+                    } )
+
+                }
+                ,
+                updateProduct: ( id, data) => {
+
+                    set( (state) : productsInStateT => {
+
+                        return {
+                            products: state.products.map( 
+                                (product) => {
+                                return product.id === id 
+                                                    ? {...product, ...data}
+                                                    : product
+                            } )
+                        }
+                    } )
+
+                }
+                ,
+                deleteProduct: (id) => {
+
+                    set( (state) : productsInStateT => {
+                        return {
+                            products: state.products.filter( (product) => product.id !== id )
+                        }
+                    } )
+
+                }
+
+            }
+
+        },
+        {name: "warranty-storage"}
+
+    )
+
 )
+
