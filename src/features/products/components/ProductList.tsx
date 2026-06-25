@@ -1,7 +1,7 @@
 import { useProductStore } from '../store'
 
 export function ProductList() {
-  const products = useProductStore((s) => s.products)
+  const products = useProductStore( (s) => s.products )
 
   if (products.length === 0) {
     return <p className="text-gray-500 text-sm mt-4">No hay productos cargados todavía.</p>

@@ -1,15 +1,15 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Product } from './types'
+import type { productT } from './types'
 
-type ProductStore = {
-  products: Product[];
-  addProduct: (product: Omit<Product, 'id'>) => void;
-  updateProduct: (id: string, data: Partial<Product>) => void;
+type productStoreT = {
+  products: productT[];
+  addProduct: (product: productT) => void;
+  updateProduct: (id: string, data: Partial<productT>) => void;
   deleteProduct: (id: string) => void;
 };
 
-export const useProductStore = create<ProductStore>()(
+export const useProductStore = create< productStoreT >()(
   persist(
     (set) => ({
       products: [],
@@ -19,8 +19,8 @@ export const useProductStore = create<ProductStore>()(
         })),
       updateProduct: (id, data) =>
         set((state) => ({
-          products: state.products.map((p) =>
-            p.id === id ? { ...p, ...data } : p
+          products: state.products.map((product) =>
+            product.id === id ? { ...product, ...data } : product
           ),
         })),
       deleteProduct: (id) =>
